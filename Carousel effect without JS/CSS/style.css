@@ -1,0 +1,75 @@
+:root {
+  --widthInner: 20vw;
+  --heightInner: 24vh;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  
+}
+
+.wrapper .inner {
+  position: absolute;
+  background-color: pink;
+  width: var(--widthInner);
+  height: var(--heightInner);
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transform: translate(-50% , -50%) perspective(70vw);
+  animation: whole_3Dround 20s linear infinite ;
+}
+
+.wrapper .inner .item {
+  position: absolute;
+  width: 13vw;
+  height: 35vh;
+  inset: 0 0 0 0;
+
+
+  /* ab y mai rotate krenge see the attached photo for visualization 
+  baaki ek center element hai slider 
+  usse maine uske aage piche 2 element nikaal diye 
+  aur unhi mai se kisi ek ko agar y axis ke along mai rotate krungi toh different positions on circles hojayenge */
+
+  /* //This will not work */
+  /* transform: translateZ(40vw)
+            rotateY(calc(((var(--position) - 1) * (360 / (var(--quantity))) * 1deg))); 
+      Because in 3D transforms, order matters — transforms are applied right to left. 
+      You want each panel to be placed around a circle — that means it should:
+Rotate by some degree (so it’s facing a different direction),
+Then move outward (translateZ) to form the ring.
+So the correct transform is:     
+*/
+ transform: translate(-50% , -50%)
+            rotateY(calc(((var(--position) - 1) * (360 / (var(--quantity))) * 1deg)))
+             translateZ(20vw); 
+
+ border-radius: 10%;            
+}
+
+.wrapper .inner .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  border-radius: 10%;            
+}
+
+@keyframes whole_3Dround{
+    from{
+        transform:translate(-50% , -50%)  perspective(90vw) rotateY(0deg);
+    }
+    to{
+        transform:translate(-50% , -50%)  perspective(90vw)  rotateY(360deg);
+    }
+}
+
+.wrapper .inner .item:hover img{
+    scale:1.02;
+}
+
